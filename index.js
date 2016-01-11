@@ -10,6 +10,7 @@ function Engine(fn) {
     this.running = false
     this.last = now()
     this._frame = 0
+    this.runningTime = 0
     this._tick = this.tick.bind(this)
 
     if (fn)
@@ -39,6 +40,8 @@ Engine.prototype.tick = function() {
     this._frame = raf(this._tick)
     var time = now()
     var dt = time - this.last
-    this.emit('tick', dt)
+    this.runningTime += dt;
+    this.emit('tick', dt, this.runningTime)
     this.last = time
 }
+
